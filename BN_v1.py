@@ -66,7 +66,7 @@ def battleship_game():
                         print("Congratulations ! You've sank all boats !")
                         pygame.quit()
                         sys.exit()
-                else:
+                elif grid_state[row][column] == None :
                     grid_state[row][column] = '.'
                     print("What a pity, you've missed.")
         display_grid(grid_state)
