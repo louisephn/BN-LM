@@ -26,25 +26,24 @@ def display_grid(grid_state):
     screen = pygame.display.set_mode((width, height))
     screen.fill(blue)
     pygame.display.set_caption("Bataille Navale")   
+    for k in range(size):
+        for j in range(size):
+            if grid_state[k][j] == 'X':
+                pygame.draw.line(screen, red, (j * square_size, k * square_size), ((j + 1) * square_size, (k + 1) * square_size), 2)
+                pygame.draw.line(screen, red, (j * square_size, (k + 1) * square_size), ((j + 1) * square_size, k * square_size), 2)
+            if grid_state[k][j] == '.':
+                pygame.draw.rect(screen, black, (j * square_size, k * square_size, square_size, square_size))
     for i in range (size + 1) :
         pygame.draw.line(screen, white, (i * square_size, 0), (i * square_size, height))
         pygame.draw.line(screen, white, (0, i * square_size), (width, i * square_size))
-    for k in range(size):
-        for j in range(size):
-            if grid_state[k,j] == 'X':
-                pygame.draw.line(screen, red, (j * square_size, k * square_size), ((j + 1) * square_size, (k + 1) * square_size), 2)
-                pygame.draw.line(screen, red, (j * square_size, (k + 1) * square_size), ((j + 1) * square_size, k * square_size), 2)
-            if grid_state[k,j] == '.':
-                pygame.draw.rectangle(screen, black, j * square_size, k * square_size)
     pygame.display.update()
-    pygame.time.wait(10000)
 
 
 def place_boat(grid_state, amount_boat):
     for i in range (amount_boat):
-        x_boat=randint(0,size)
-        y_boat=randint(0,size)
-        grid_state[x_boat,y_boat] = 'O'
+        x_boat=randint(0,size-1)
+        y_boat=randint(0,size-1)
+        grid_state[x_boat][y_boat] = 'O'
 
 
 def battleship_game():
@@ -63,7 +62,7 @@ def battleship_game():
                 if grid_state[row][column] == 'O':
                     print("Congratulations ! You touched a boat !")
                     grid_state[row][column] = 'X'
-                    if all('O' not in row for row in board):
+                    if all('O' not in row for row in grid_state):
                         print("Congratulations ! You've sank all boats !")
                         pygame.quit()
                         sys.exit()
@@ -72,7 +71,10 @@ def battleship_game():
                     print("What a pity, you've missed.")
         display_grid(grid_state)
         pygame.display.flip()
+        pygame.time.wait(1000)
 
 
 
 
+
+battleship_game()
