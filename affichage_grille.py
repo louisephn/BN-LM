@@ -8,6 +8,8 @@ clock = pygame.time.Clock()
 
 blue = (70,130,180)
 white = (255, 255, 255)
+red = (255,0,0)
+black = (0,0,0)
 
 
 numbers = [i for i in range(1,11)]
@@ -27,6 +29,13 @@ def display_grid(grid_state):
     for i in range (size + 1) :
         pygame.draw.line(screen, white, (i * square_size, 0), (i * square_size, height))
         pygame.draw.line(screen, white, (0, i * square_size), (width, i * square_size))
+    for k in range(size):
+        for j in range(size):
+            if grid_state[k,j] == 'X':
+                pygame.draw.line(screen, red, (j * square_size, k * square_size), ((j + 1) * square_size, (k + 1) * square_size), 2)
+                pygame.draw.line(screen, red, (j * square_size, (k + 1) * square_size), ((j + 1) * square_size, k * square_size), 2)
+            if grid_state[k,j] == '.':
+                pygame.draw.rectangle(screen, black, j * square_size, k * square_size)
     pygame.display.update()
     pygame.time.wait(10000)
 
@@ -59,7 +68,8 @@ def battleship_game():
                         pygame.quit()
                         sys.exit()
                 else:
-                    print("Waht a pity, you've missed.")
+                    grid_state[row][column] = '.'
+                    print("What a pity, you've missed.")
         display_grid(grid_state)
         pygame.display.flip()
 
