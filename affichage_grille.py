@@ -54,12 +54,12 @@ def battleship_game():
                 if grid_state[row][column] == 'O':
                     print("Congratulations ! You touched a boat !")
                     grid_state[row][column] = 'X'
-                    if all('O' not in row for row in board):
+                if all('O' not in row for row in board):
                         print("Congratulations ! You've sank all boats !")
                         pygame.quit()
                         sys.exit()
                 else:
-                    print("Waht a pity, you've missed.")
+                    print("What a pity, you've missed.")
         display_grid(grid_state)
         pygame.display.flip()
 
