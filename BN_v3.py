@@ -21,20 +21,25 @@ height = (size+1) * square_size
 width = (size+1) * square_size
 grid_state = [[None for i in range(size+1)]for k in range(size+1)]
 amount_boat = 4
+score = 0
 
 font = pygame.font.Font(None, 36)
 
-def display_grid(grid_state):
-    screen = pygame.display.set_mode((width, height))
+def display_grid(grid_state, username):
+    screen = pygame.display.set_mode((width, height+2*square_size))
     screen.fill(blue)
     pygame.display.set_caption("Bataille Navale")
 
     
     for k in range(size+1):
         pygame.draw.rect(screen, white, (0, k*square_size, square_size, square_size))
-        pygame.draw.rect(screen, white, (k * square_size, 0, square_size, square_size))  
+        pygame.draw.rect(screen, white, (k * square_size, 0, square_size, square_size)) 
+        pygame.draw.rect(screen, white, (k*square_size, height, square_size, square_size))
+        pygame.draw.rect(screen, white, (k*square_size, (height+square_size),square_size, square_size)) 
+
         pygame.draw.line(screen, black, (k*square_size, 0), (k*square_size, square_size))
         pygame.draw.line(screen, black, (0, k*square_size), (square_size, k*square_size))
+    
     pygame.draw.line(screen, black, (square_size, 0), (square_size, height))
     pygame.draw.line(screen, black, (0, square_size), (width, square_size))
     
@@ -55,11 +60,21 @@ def display_grid(grid_state):
                 pygame.draw.line(screen, red, (j * square_size, (k + 1) * square_size), ((j + 1) * square_size, k * square_size), 2)
             if grid_state[k][j] == '.':
                 pygame.draw.rect(screen, black, (j * square_size, k * square_size, square_size, square_size))
+    
     for i in range (2,size + 1) :
         pygame.draw.line(screen, white, (i * square_size, square_size), (i * square_size, height))
         pygame.draw.line(screen, white, (square_size, i * square_size), (width, i * square_size))
     pygame.display.update()
 
+    phrase = f"Score : {score} / {amount_boat}"
+    score_surface = font.render(phrase, True, black)  
+    score_position = score_surface.get_rect(center=(4*width // 5, height + (3/2)*square_size))
+    screen.blit(score_surface, score_position) 
+
+    phrase_2 = f"Username : {username}"
+    name_surface = font.render(phrase_2, True, black)  
+    name_position = name_surface.get_rect(center=( 3*square_size, height + (1/2)*square_size))
+    screen.blit(name_surface, name_position)
 
 def place_boat(grid_state, amount_boat):
     for i in range (amount_boat):
@@ -69,7 +84,10 @@ def place_boat(grid_state, amount_boat):
 
 
 def battleship_game():
-    display_grid(grid_state)
+
+    username = input("Choose your user name")
+
+    display_grid(grid_state,username)
     place_boat(grid_state, amount_boat)
 
     while True:
@@ -91,7 +109,7 @@ def battleship_game():
                 elif grid_state[row][column] == None :
                     grid_state[row][column] = '.'
                     print("What a pity, you've missed.")
-        display_grid(grid_state)
+        display_grid(grid_state,username)
         pygame.display.flip()
         pygame.time.wait(1000)
 
