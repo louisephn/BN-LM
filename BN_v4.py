@@ -16,11 +16,11 @@ green = (0, 255, 0)
 
 letters = ['A','B','C','D','E','F','G','H','I','J']
 size = len(letters)
-numbers = [i for i in range(size+1)]
+numbers = [i for i in range(size + 1)]
 square_size = 50
-height = (size+1) * square_size
-width = (size+1) * square_size
-grid_state = [[None for i in range(size+1)]for k in range(size+1)]
+height = (size + 1) * square_size
+width = (size + 1) * square_size
+grid_state = [[None for i in range(size + 1)]for k in range(size + 1)]
 amount_boat1 = 4
 amount_boat2 = 5
 amount_boat3 = 3
@@ -28,7 +28,7 @@ amount_boat = amount_boat1 + amount_boat2 + amount_boat3
 font = pygame.font.Font(None, 36)
 
 def display_grid(grid_state, username, score, last_move):
-    screen = pygame.display.set_mode((width, height+2*square_size))
+    screen = pygame.display.set_mode((width, height + 2 * square_size))
     screen.fill(blue)
     pygame.display.set_caption("Bataille Navale")
 
@@ -49,7 +49,7 @@ def display_grid(grid_state, username, score, last_move):
     for i, row in enumerate(letters):
         for j, cell in enumerate(row):
             letter_surface = font.render(cell, True, black)
-            screen.blit(letter_surface, (j* square_size + square_size // 2 - letter_surface.get_width() // 2, (i+1) * square_size + square_size // 2 - letter_surface.get_height() // 2))
+            screen.blit(letter_surface, (j* square_size + square_size // 2 - letter_surface.get_width() // 2, (i + 1) * square_size + square_size // 2 - letter_surface.get_height() // 2))
     
     for i in range(size+1):
             number_surface = font.render(str(numbers[i]), True, black)
@@ -72,24 +72,24 @@ def display_grid(grid_state, username, score, last_move):
 
     phrase = f"Score : {score} / {amount_boat}"
     score_surface = font.render(phrase, True, black)  
-    score_position = score_surface.get_rect(center=(4*width // 5, height + (3/2)*square_size))
+    score_position = score_surface.get_rect(center = (4 * width // 5, height + (3/2) * square_size))
     screen.blit(score_surface, score_position) 
 
     phrase_2 = f"Username : {username}"
     name_surface = font.render(phrase_2, True, black)  
-    name_position = name_surface.get_rect(center=( 3*square_size, height + (1/2)*square_size))
+    name_position = name_surface.get_rect(center = ( 3*square_size, height + (1/2) * square_size))
     screen.blit(name_surface, name_position)
 
     sentence_surface =  font.render(last_move, True, red)
-    sentence_position = sentence_surface.get_rect(center=( 5*square_size, height + square_size ))
+    sentence_position = sentence_surface.get_rect(center = ( 5* square_size, height + square_size ))
     screen.blit(sentence_surface, sentence_position)
 
 
 
 def place_boat(grid_state, amount_boat1, amount_boat2, amount_boat3):
     for i in range (amount_boat1):
-        x_boat = randint(1,size-1)
-        y_boat = randint(1,size-1)
+        x_boat = randint(1,size - 1)
+        y_boat = randint(1,size - 1)
         grid_state[x_boat][y_boat] = 'O'
     for i in range (amount_boat2):
         incorrect_position = True
@@ -98,7 +98,7 @@ def place_boat(grid_state, amount_boat1, amount_boat2, amount_boat3):
             y_head = randint(1, size - 2)
             direction = randint(1,2)
             x_boat = x_head + direction % 2
-            y_boat = y_head + direction //2
+            y_boat = y_head + direction // 2
             if grid_state[x_head][y_head] == None:
                 if grid_state[x_boat][y_boat] == None :
                     incorrect_position = False
