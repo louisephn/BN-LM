@@ -25,7 +25,7 @@ score = 0
 
 font = pygame.font.Font(None, 36)
 
-def display_grid(grid_state, username):
+def display_grid(grid_state, username, last_move):
     screen = pygame.display.set_mode((width, height+2*square_size))
     screen.fill(blue)
     pygame.display.set_caption("Bataille Navale")
@@ -76,6 +76,12 @@ def display_grid(grid_state, username):
     name_position = name_surface.get_rect(center=( 3*square_size, height + (1/2)*square_size))
     screen.blit(name_surface, name_position)
 
+    sentence_surface =  font.render(last_move, True, black)
+    sentence_position = sentence_surface.get_rect(center=( 5*square_size, height + square_size ))
+    screen.blit(sentence_surface, sentence_position)
+
+
+
 def place_boat(grid_state, amount_boat):
     for i in range (amount_boat):
         x_boat=randint(0,size-1)
@@ -86,9 +92,11 @@ def place_boat(grid_state, amount_boat):
 def battleship_game():
 
     username = input("Choose your user name")
-
-    display_grid(grid_state,username)
+    last_move = ''
+    display_grid(grid_state,username, last_move)
     place_boat(grid_state, amount_boat)
+
+    
 
     while True:
         for event in pygame.event.get():
@@ -100,16 +108,19 @@ def battleship_game():
                 row = position[1] // square_size
                 column = position[0] // square_size
                 if grid_state[row][column] == 'O':
+                    last_move = 'Congratulations ! You touched a boat !'
                     print("Congratulations ! You touched a boat !")
                     grid_state[row][column] = 'X'
                     if all('O' not in row for row in grid_state):
                         print("Congratulations ! You've sank all boats !")
+                        last_move = "Congratulations ! You've sank all boats !"
                         pygame.quit()
                         sys.exit()
                 elif grid_state[row][column] == None :
                     grid_state[row][column] = '.'
                     print("What a pity, you've missed.")
-        display_grid(grid_state,username)
+                    last_move = "What a pity, you've missed."
+        display_grid(grid_state,username,last_move)
         pygame.display.flip()
         pygame.time.wait(1000)
 
