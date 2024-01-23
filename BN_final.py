@@ -383,7 +383,7 @@ def display_grid_double(grid_state, username, score, last_move):
 """
 And finally, a small code snippet for displaying a timer measuring elapsed time.
 Unfortunately, we were unable to integrate it into the rest of our code.
-"""
+
 
 import pygame
 import sys
@@ -393,7 +393,7 @@ import time
 pygame.init()
 
 # Definition of constants
-width, height = 400, 200
+width, height = size + 1) * square_size, size + 1) * square_size
 
 # Creation of the window
 window = pygame.display.set_mode((width, height))
@@ -428,3 +428,4 @@ while True:
     # Regulate the loop speed
     pygame.time.Clock().tick(1)
 
+"""
